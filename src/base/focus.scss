@@ -1,0 +1,11 @@
+@import "../abstracts/variables.scss";
+
+*:focus {
+  outline: var(--colors-link) solid 1px;
+}
+
+@media (max-width: 768px) {
+  *:focus {
+    outline: transparent;
+  }
+}

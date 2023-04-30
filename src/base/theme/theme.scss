@@ -1,0 +1,49 @@
+//*light
+
+body[data-theme="light"] {
+  --colors-text: #222628;
+  --colors-bg: #b6c3ca;
+  --colors-ui-base: #ffffff;
+  --colors-link: #585859;
+  --colors-link-hover: #5da9cf;
+
+  --shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
+}
+body[data-theme="light"] header,
+body[data-theme="light"] .app,
+body[data-theme="light"] .ui-block {
+  background-color: var(--colors-ui-base);
+  background-image: linear-gradient(90deg, #b6c3ca, #ffffff);
+}
+
+//*dark
+
+body[data-theme="dark"] {
+  --colors-text: #e7d1b4;
+  --colors-bg: #525252;
+  --colors-ui-base: #333333;
+  --colors-link: #dfa96b;
+  --colors-link-hover: #e57d07;
+
+  --shadow: rgba(245, 245, 245, 0.2) 0 0 8px;
+}
+
+body[data-theme="dark"] header,
+body[data-theme="dark"] .app,
+body[data-theme="dark"] .ui-block {
+  background-color: var(--colors-ui-base);
+  background-image: linear-gradient(90deg, #121212, #333333, #525252);
+}
+
+//*all
+body {
+  color: var(--colors-text);
+  background-color: var(--colors-bg);
+  transition: color 500ms ease-out, background-color 500ms ease-out;
+}
+
+.ui-block {
+  background-color: var(--colors-ui-base);
+  box-shadow: var(--shadow);
+  transition: color 500ms ease-out, background-color 500ms ease-out;
+}
