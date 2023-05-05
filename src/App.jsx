@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { MainPage } from "./pages/MainPage";
 import { CharactersPage } from "./pages/CharactersPage";
-import { NotFoundPage } from "./pages/NotFoundPage/MainPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { Layout } from "./components/Layout/Layout";
 import { GlobalStyle } from "./base/GlobalStyle";
 
@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -17,11 +17,11 @@ const StyledMain = styled.main`
 const StyledContainer = styled.div`
   /* display: flex; */
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1.2fr 2fr;
   grid-template-rows: auto;
   grid-template-areas: "text image";
   max-width: 1200px;
-  padding: 50px 10px;
+  padding: 20px 10px;
   width: 100%;
   /* height: 100vh; */
   align-items: center;
@@ -39,7 +39,7 @@ const StyledTextContainer = styled.div`
   grid-area: text;
   /* flex: 1 35%; */
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
   @media (max-width: 1024px) {
     align-items: center;
     justify-content: center;
@@ -48,19 +48,13 @@ const StyledTextContainer = styled.div`
 `;
 
 const StyledImageContainer = styled.div`
-  /* flex: 1 65%; */
-  /* grid-area: image; */
   position: relative;
-  padding-bottom: 90%;
-  /* @media (max-width: 1024px) {
-    padding-right: 65%;
-    flex: auto;
-  } */
+  padding-bottom: 100%;
 `;
 
 const StyledTitle = styled.h1`
   font-size: 72px;
-  line-height: 84.17px;
+  line-height: 80px;
 `;
 
 const StyledText = styled.p`
