@@ -4,14 +4,24 @@ import styled from "styled-components";
 // import { getPeople } from "../../store/PeopleSlice";
 // import { getCards } from "../../helpers/GetCards/GetCards";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import { v4 } from "uuid";
 
-import { Cards } from "../Cards";
+import { Card } from "../Card";
 
-const StyledContainer = styled.div``;
+const StyledContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+`;
 
-const CardContainer = () => {
-  const [allPeople, setAllPeople] = useState([]);
+const LoadingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CardContainer = ({ allPeople, setAllPeople, setModalIsVisible }) => {
+  // const [allPeople, setAllPeople] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [peoplesPerPage] = useState(9);
@@ -81,11 +91,18 @@ const CardContainer = () => {
 
   // getAllPeople();
 
-  //?
-
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <h2>Loading...</h2>
+      </LoadingContainer>
+    );
+  }
   return (
     <StyledContainer>
-      <Cards cards={allPeople} loading={loading} />
+      {allPeople.map((card) => (
+        <Card card={card} key={v4()} setModalIsVisible={setModalIsVisible} />
+      ))}
     </StyledContainer>
   );
 };

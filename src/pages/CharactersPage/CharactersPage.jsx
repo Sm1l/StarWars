@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { CardContainer } from "../../components/CardContainer";
+import { ModalCard } from "../../components/ModalCard";
 
 const StyledMain = styled.main`
   /* background-color: var(--color-yellow); */
@@ -42,19 +43,25 @@ const StyledSpan = styled.span`
 `;
 
 const CharactersPage = () => {
+  const [allPeople, setAllPeople] = useState([]);
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+
   return (
-    <StyledMain>
-      <StyledContainer>
-        <StyledLanguage>language: en</StyledLanguage>
-        <StyledTitle>
-          60 <StyledSpan>Peoples</StyledSpan> for you to choose your favorite
-        </StyledTitle>
-        <div>
-          <div>Color eye</div>
-          <CardContainer />
-        </div>
-      </StyledContainer>
-    </StyledMain>
+    <>
+      {modalIsVisible && <ModalCard card={allPeople[3]}></ModalCard>}
+      <StyledMain>
+        <StyledContainer>
+          <StyledLanguage>language: en</StyledLanguage>
+          <StyledTitle>
+            {allPeople.length} <StyledSpan>Peoples</StyledSpan> for you to choose your favorite
+          </StyledTitle>
+          <div>
+            <div>Color eye</div>
+            <CardContainer allPeople={allPeople} setAllPeople={setAllPeople} setModalIsVisible={setModalIsVisible} />
+          </div>
+        </StyledContainer>
+      </StyledMain>
+    </>
   );
 };
 
