@@ -1,33 +1,68 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getPeople } from "../../store/PeopleSlice";
-// import { getCards } from "../../helpers/GetCards/GetCards";
+import styled, { keyframes } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { getPeoples } from "../../store/PeopleSlice";
 import axios from "axios";
 import { v4 } from "uuid";
+import { Pagination } from "@mui/material";
 
 import { Card } from "../Card";
 
-const StyledContainer = styled.div`
+import DartVader from "./img/DartVader.png";
+
+const SContainer = styled.div`
   display: grid;
+  width: 100%;
+  height: 100%;
   grid-template-columns: repeat(3, 1fr);
   gap: 35px;
+  @media (max-width: 1124px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const LoadingContainer = styled.div`
+const SLoadingContainer = styled.div`
   display: flex;
+  /* flex: 1 auto; */
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+  gap: 20px;
+  justify-content: space-between;
+  height: 100%;
 `;
 
-const CardContainer = ({ allPeople, setAllPeople, setModalIsVisible }) => {
-  // const [allPeople, setAllPeople] = useState([]);
+const rotate = keyframes`
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+`;
+
+const SImgLoading = styled.img`
+  animation: ${rotate} 2s linear infinite;
+`;
+
+//*component
+const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
+  const allPeople = useSelector((state) => state.people.peoples);
+
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [peoplesPerPage] = useState(9);
+  const [peoplesPerPage, setPeoplesPerPage] = useState(9);
+  const [currentPeoples, setCurrentPeoples] = useState([]);
+  const [pageQty, setPageQty] = useState(0);
+  const dispatch = useDispatch();
 
+  //*api
   const URL = "https://swapi.dev/api/people/";
   const getPeople = (url) => axios.get(url);
+
   const getAllPeople = async () => {
     setLoading(true);
     let allPpl = [];
@@ -38,13 +73,49 @@ const CardContainer = ({ allPeople, setAllPeople, setModalIsVisible }) => {
       next = res.data.next;
     }
     setLoading(false);
-    setAllPeople(allPpl);
+    dispatch(getPeoples({ peoples: allPpl }));
+    // return allPpl;
   };
 
   useEffect(() => {
-    getAllPeople();
+    if (allPeople.length === 0) {
+      getAllPeople();
+    }
+  }, [allPeople]);
+
+  //*pagination
+
+  useEffect(() => {
+    setPageQty(Math.ceil(allPeople.length / peoplesPerPage));
+  }, [allPeople, peoplesPerPage]);
+
+  useEffect(() => {
+    setCurrentPeoples(allPeople.slice((currentPage - 1) * peoplesPerPage, currentPage * peoplesPerPage));
+  }, [allPeople, currentPage, peoplesPerPage]);
+
+  //*resize
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
-  console.log(allPeople);
+
+  useEffect(() => {
+    setPeoplesPerPage(9);
+    if (windowWidth <= 1124) {
+      setPeoplesPerPage(8);
+    }
+    if (windowWidth <= 600) {
+      setPeoplesPerPage(5);
+    }
+  }, [windowWidth]);
 
   //*---------------------------------start-------------------------
   // const URL = "https://swapi.dev/api/people/";
@@ -93,17 +164,27 @@ const CardContainer = ({ allPeople, setAllPeople, setModalIsVisible }) => {
 
   if (loading) {
     return (
-      <LoadingContainer>
-        <h2>Loading...</h2>
-      </LoadingContainer>
+      <SLoadingContainer>
+        <SImgLoading src={DartVader} alt="Dart Vader loading" />
+      </SLoadingContainer>
     );
   }
   return (
-    <StyledContainer>
-      {allPeople.map((card) => (
-        <Card card={card} key={v4()} setModalIsVisible={setModalIsVisible} />
-      ))}
-    </StyledContainer>
+    <SLoadingContainer>
+      <SContainer>
+        {currentPeoples.map((card) => (
+          <Card card={card} key={v4()} modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />
+        ))}
+      </SContainer>
+      <Pagination
+        showFirstButton
+        showLastButton
+        count={pageQty}
+        page={currentPage}
+        size="small"
+        onChange={(_, num) => setCurrentPage(num)}
+      ></Pagination>
+    </SLoadingContainer>
   );
 };
 

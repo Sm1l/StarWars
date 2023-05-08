@@ -13,6 +13,7 @@ const StyledHeader = styled.header`
   color: var(--color-white);
   background-color: var(--color-blue);
   width: 100%;
+  padding-top: 10px;
 `;
 const StyledContainer = styled.div`
   display: flex;

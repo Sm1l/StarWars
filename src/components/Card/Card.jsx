@@ -1,7 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 
-const CardContainer = styled.div`
+import { getModalPeople } from "../../store/PeopleSlice";
+
+const SCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--color-light-grey);
@@ -11,26 +14,26 @@ const CardContainer = styled.div`
   gap: 15px;
   cursor: pointer;
 `;
-const CardName = styled.p`
+const SCardName = styled.p`
   font-size: 18px;
   font-weight: 700;
   line-height: 21px;
   text-shadow: 4px 4px 4px rgba(33, 33, 33, 0.1);
 `;
 
-const AnthropometricContainer = styled.div`
+const SAnthropometricContainer = styled.div`
   display: flex;
   gap: 10px;
 `;
 
-const AnthropometricItem = styled.div`
+const SAnthropometricItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 5px;
 `;
-const AnthropometricCircle = styled.div`
+const SAnthropometricCircle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,16 +47,16 @@ const AnthropometricCircle = styled.div`
   border-radius: 50%;
   overflow: hidden;
 `;
-const AnthropometricText = styled.p`
+const SAnthropometricText = styled.p`
   color: var(--color-grey);
 `;
 
-const TagContainer = styled.div`
+const STagContainer = styled.div`
   display: flex;
   gap: 10px;
 `;
 
-const TagItem = styled.div`
+const STagItem = styled.div`
   font-family: "Roboto";
   font-size: 12px;
   line-height: 14px;
@@ -82,40 +85,44 @@ const TagItem = styled.div`
     `}
 `;
 
+//*component
+
 const Card = ({ card, setModalIsVisible }) => {
-  const cardHandleClick = (e) => {
-    console.log("hello");
+  const dispatch = useDispatch();
+  const cardHandleClick = () => {
     setModalIsVisible(true);
+    dispatch(getModalPeople({ modalPeople: card }));
   };
 
   const genderItem = () => {
     if (card.gender === "male") {
-      return <TagItem>{card.gender}</TagItem>;
+      return <STagItem>{card.gender}</STagItem>;
     } else if (card.gender === "female") {
-      return <TagItem pink>{card.gender}</TagItem>;
+      return <STagItem pink>{card.gender}</STagItem>;
     } else if (card.gender === "hermaphrodite") {
-      return <TagItem yellow>{card.gender}</TagItem>;
+      return <STagItem yellow>{card.gender}</STagItem>;
     }
   };
 
   return (
-    <CardContainer onClick={() => cardHandleClick()}>
-      <CardName>{card.name}</CardName>
-      <AnthropometricContainer>
-        <AnthropometricItem>
-          <AnthropometricCircle>{card.height !== "unknown" ? card.height : "?"}</AnthropometricCircle>
-          <AnthropometricText>height</AnthropometricText>
-        </AnthropometricItem>
-        <AnthropometricItem>
-          <AnthropometricCircle>{card.mass !== "unknown" ? card.mass : "?"}</AnthropometricCircle>
-          <AnthropometricText>mass</AnthropometricText>
-        </AnthropometricItem>
-      </AnthropometricContainer>
-      <TagContainer>
+    //!CardCOntainer сделать доступным (клик)
+    <SCardContainer onClick={cardHandleClick}>
+      <SCardName>{card.name}</SCardName>
+      <SAnthropometricContainer>
+        <SAnthropometricItem>
+          <SAnthropometricCircle>{card.height !== "unknown" ? card.height : "?"}</SAnthropometricCircle>
+          <SAnthropometricText>height</SAnthropometricText>
+        </SAnthropometricItem>
+        <SAnthropometricItem>
+          <SAnthropometricCircle>{card.mass !== "unknown" ? card.mass : "?"}</SAnthropometricCircle>
+          <SAnthropometricText>mass</SAnthropometricText>
+        </SAnthropometricItem>
+      </SAnthropometricContainer>
+      <STagContainer>
         {card.gender !== "n/a" && genderItem()}
-        {card.birth_year !== "unknown" && <TagItem blue>{card.birth_year}</TagItem>}
-      </TagContainer>
-    </CardContainer>
+        {card.birth_year !== "unknown" && <STagItem blue>{card.birth_year}</STagItem>}
+      </STagContainer>
+    </SCardContainer>
   );
 };
 

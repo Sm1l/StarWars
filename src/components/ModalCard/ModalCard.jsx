@@ -1,13 +1,16 @@
 import React from "react";
 import styled, { css } from "styled-components";
+// import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 
 import iconMale from "./img/Icon male.svg";
 import iconFemale from "./img/Icon female.svg";
 import iconHermo from "./img/icon hermo.svg";
+import iconClose from "./img/closeIcon.svg";
 
-const ModalOverlay = styled.div`
+const SModalOverlay = styled.div`
   width: 100vw;
   height: 100vh;
+  overflow-y: hidden;
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
@@ -18,7 +21,7 @@ const ModalOverlay = styled.div`
   z-index: 1;
 `;
 
-const ModalContainer = styled.div`
+const SModalContainer = styled.div`
   background-color: var(--color-blue);
   position: relative;
   display: flex;
@@ -28,7 +31,7 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const ImgContainer = styled.div`
+const SImgContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +39,7 @@ const ImgContainer = styled.div`
   padding: 30px;
   gap: 30px;
 `;
-const InfoContainer = styled.div`
+const SInfoContainer = styled.div`
   background-image: linear-gradient(var(--color-purple), var(--color-blue));
   padding: 30px;
   border-radius: 0 16px 16px 0;
@@ -46,12 +49,12 @@ const InfoContainer = styled.div`
   justify-content: center;
   gap: 20px;
 `;
-const TagContainer = styled.div`
+const STagContainer = styled.div`
   display: flex;
   gap: 10px;
   align-self: flex-end;
 `;
-const TagItem = styled.div`
+const STagItem = styled.div`
   font-family: "Roboto";
   font-size: 12px;
   line-height: 14px;
@@ -81,7 +84,7 @@ const TagItem = styled.div`
     `}
 `;
 
-const ModalName = styled.h2`
+const SModalName = styled.h2`
   color: var(--color-white);
   font-weight: 700;
   font-size: 36px;
@@ -89,7 +92,7 @@ const ModalName = styled.h2`
   text-shadow: 4px 4px 4px rgba(33, 33, 33, 0.1);
 `;
 
-const InfoBlock = styled.div`
+const SInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -98,18 +101,66 @@ const InfoBlock = styled.div`
   border-radius: 10px;
 `;
 
-const InfoP = styled.p`
+const SInfoP = styled.p`
   font-size: 16px;
 `;
+const SAnthropometricContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
 
-const ModalCard = ({ card }) => {
+const SAnthropometricItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--color-white);
+  padding: 10px;
+  border-radius: 16px;
+`;
+const SAnthropometricCircle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 45px;
+  height: 45px;
+  font-size: 16px;
+  line-height: 18px;
+  padding: 10px;
+  border: 3px solid var(--color-black);
+  border-radius: 50%;
+  overflow: hidden;
+`;
+const SAnthropometricText = styled.p`
+  color: var(--color-grey);
+`;
+
+const SCloseButton = styled.button`
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background-color: transparent;
+  transition: transform 0.5s ease-in-out;
+  :hover {
+    /* perspective: 500px; */
+    transform: rotateZ(90deg);
+    transition: transform 0.5s ease-in-out;
+  }
+`;
+
+const SCloseImg = styled.img``;
+
+//*component
+const ModalCard = ({ card, setModalIsVisible }) => {
   const genderItem = () => {
     if (card.gender === "male") {
-      return <TagItem>{card.gender}</TagItem>;
+      return <STagItem>{card.gender}</STagItem>;
     } else if (card.gender === "female") {
-      return <TagItem pink>{card.gender}</TagItem>;
+      return <STagItem pink>{card.gender}</STagItem>;
     } else if (card.gender === "hermaphrodite") {
-      return <TagItem yellow>{card.gender}</TagItem>;
+      return <STagItem yellow>{card.gender}</STagItem>;
     }
   };
   const genderImg = () => {
@@ -121,30 +172,49 @@ const ModalCard = ({ card }) => {
       return <img src={iconHermo} alt="gender" />;
     }
   };
+
+  const buttonHandleClick = (e) => {
+    e.preventDefault();
+    setModalIsVisible(false);
+  };
+
   return (
-    <ModalOverlay>
-      <ModalContainer>
-        <ImgContainer>
+    <SModalOverlay>
+      <SModalContainer>
+        <SImgContainer>
           {card.gender !== "n/a" && genderImg()}
-          {/* <img src={genderImg()} alt="gender" /> */}
-          <TagContainer>
+          <STagContainer>
             {card.gender !== "n/a" && genderItem()}
-            {card.birth_year !== "unknown" && <TagItem blue>{card.birth_year}</TagItem>}
-          </TagContainer>
-        </ImgContainer>
-        <InfoContainer>
-          <ModalName>{card.name}</ModalName>
-          <InfoBlock>
-            <InfoP>eye color: {card.eye_color}</InfoP>
-            <InfoP>hair color: {card.hair_color}</InfoP>
-            <InfoP>skin color: {card.skin_color}</InfoP>
-          </InfoBlock>
-          Info Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi suscipit nihil mollitia itaque numquam
-          totam aperiam provident pariatur perferendis doloribus repellendus quia, nostrum quis enim nemo optio!
-          Repellendus, iusto ea.
-        </InfoContainer>
-      </ModalContainer>
-    </ModalOverlay>
+            {card.birth_year !== "unknown" && <STagItem blue>{card.birth_year}</STagItem>}
+          </STagContainer>
+        </SImgContainer>
+        <SInfoContainer>
+          <SModalName>{card.name}</SModalName>
+          <SInfoBlock>
+            <SInfoP> {card.eye_color !== "n/a" && `eye color: ${card.eye_color}`}</SInfoP>
+            <SInfoP> {card.hair_color !== "n/a" && `hair color: ${card.hair_color}`}</SInfoP>
+            <SInfoP> {card.skin_color !== "n/a" && `skin color: ${card.skin_color}`}</SInfoP>
+          </SInfoBlock>
+          <SAnthropometricContainer>
+            {card.height !== "unknown" && card.height !== "n/a" && (
+              <SAnthropometricItem>
+                <SAnthropometricCircle>{card.height}</SAnthropometricCircle>
+                <SAnthropometricText>height</SAnthropometricText>
+              </SAnthropometricItem>
+            )}
+            {card.mass !== "unknown" && card.mass !== "n/a" && (
+              <SAnthropometricItem>
+                <SAnthropometricCircle>{card.mass}</SAnthropometricCircle>
+                <SAnthropometricText>mass</SAnthropometricText>
+              </SAnthropometricItem>
+            )}
+          </SAnthropometricContainer>
+        </SInfoContainer>
+        <SCloseButton onClick={buttonHandleClick}>
+          <SCloseImg src={iconClose} alt="Close button"></SCloseImg>
+        </SCloseButton>
+      </SModalContainer>
+    </SModalOverlay>
   );
 };
 

@@ -1,36 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 import { CardContainer } from "../../components/CardContainer";
 import { ModalCard } from "../../components/ModalCard";
 
-const StyledMain = styled.main`
+const SMain = styled.main`
   /* background-color: var(--color-yellow); */
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* justify-content: center; */
 `;
-const StyledContainer = styled.div`
+const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1200px;
-  padding: 50px 10px;
+  padding: 20px 10px;
   width: 100%;
+  height: 100%;
   /* align-items: center;
   justify-content: center; */
   gap: 50px;
 `;
 
-const StyledLanguage = styled.p`
+const SLanguage = styled.p`
   align-self: flex-end;
   font-family: "Source Sans Pro";
   font-size: 16px;
   line-height: 20px;
 `;
 
-const StyledTitle = styled.h2`
+const STitle = styled.h2`
   font-weight: 400;
   font-size: 35px;
   line-height: 41px;
@@ -38,29 +42,56 @@ const StyledTitle = styled.h2`
   letter-spacing: 3px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
-const StyledSpan = styled.span`
+const SSpan = styled.span`
   font-weight: 700;
 `;
+//*component
 
 const CharactersPage = () => {
-  const [allPeople, setAllPeople] = useState([]);
+  const allPeople = useSelector((state) => state.people.peoples);
+  const modalPeople = useSelector((state) => state.people.modalPeople);
   const [modalIsVisible, setModalIsVisible] = useState(false);
+
+  //*disable scroll
+  useEffect(() => {
+    if (modalIsVisible) {
+      disableBodyScroll(ModalCard);
+    } else {
+      enableBodyScroll(ModalCard);
+    }
+  }, [modalIsVisible]);
+
+  //*close modal "Escape"
+  useEffect(() => {
+    const closeModal = (e) => {
+      if (e.key === "Escape") {
+        setModalIsVisible(false);
+      }
+    };
+    if (modalIsVisible) {
+      window.addEventListener("keydown", closeModal);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", closeModal);
+    };
+  }, [modalIsVisible]);
 
   return (
     <>
-      {modalIsVisible && <ModalCard card={allPeople[3]}></ModalCard>}
-      <StyledMain>
-        <StyledContainer>
-          <StyledLanguage>language: en</StyledLanguage>
-          <StyledTitle>
-            {allPeople.length} <StyledSpan>Peoples</StyledSpan> for you to choose your favorite
-          </StyledTitle>
+      {modalIsVisible && <ModalCard card={modalPeople} setModalIsVisible={setModalIsVisible}></ModalCard>}
+      <SMain>
+        <SContainer>
+          <SLanguage>language: en</SLanguage>
+          <STitle>
+            {allPeople.length !== 0 ? allPeople.length : null} <SSpan>Peoples</SSpan> for you to choose your favorite
+          </STitle>
           <div>
             <div>Color eye</div>
-            <CardContainer allPeople={allPeople} setAllPeople={setAllPeople} setModalIsVisible={setModalIsVisible} />
+            <CardContainer modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />
           </div>
-        </StyledContainer>
-      </StyledMain>
+        </SContainer>
+      </SMain>
     </>
   );
 };

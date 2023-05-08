@@ -7,7 +7,7 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { Layout } from "./components/Layout/Layout";
 import { GlobalStyle } from "./base/GlobalStyle";
 
-const StyledContainer = styled.div`
+const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <StyledContainer>
+      <SContainer>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
@@ -30,19 +30,9 @@ function App() {
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </StyledContainer>
+      </SContainer>
     </>
   );
 }
 
 export default App;
-
-{
-  /* <Routes>
-  <Route path="/" element={<MainPage offsetY={offsetY} scrollY={scrollY} />} />
-  <Route path="/" element={<Layout offsetY={offsetY} scrollY={scrollY} />}>
-    <Route path="/speech" element={<SpeechPage offsetY={offsetY} scrollY={scrollY} />} />
-    <Route path="/actress" element={<ActressPage offsetY={offsetY} scrollY={scrollY} />} />
-  </Route>
-</Routes>; */
-}
