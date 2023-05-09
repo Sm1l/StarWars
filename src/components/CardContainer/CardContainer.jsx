@@ -7,9 +7,11 @@ import { v4 } from "uuid";
 import { Pagination } from "@mui/material";
 
 import { Card } from "../Card";
+import { SelectFilter } from "../SelectFilter";
 
 import DartVader from "./img/DartVader.png";
 
+//*style
 const SContainer = styled.div`
   display: grid;
   width: 100%;
@@ -24,12 +26,14 @@ const SContainer = styled.div`
   }
 `;
 
+const SSelectContainer = styled.div`
+  align-self: flex-start;
+`;
+
 const SLoadingContainer = styled.div`
   display: flex;
-  /* flex: 1 auto; */
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   gap: 20px;
   justify-content: space-between;
   height: 100%;
@@ -48,15 +52,41 @@ const SImgLoading = styled.img`
   animation: ${rotate} 2s linear infinite;
 `;
 
+const STitle = styled.h2`
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 41px;
+  text-align: center;
+  letter-spacing: 3px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+`;
+const SSpan = styled.span`
+  font-weight: 700;
+`;
+
 //*component
 const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
-  const allPeople = useSelector((state) => state.people.peoples);
+  const allPeoples = useSelector((state) => state.people.peoples);
+  //!delete test
+  // useEffect(() => {
+  //   const set = new Set();
+  //   allPeoples.map((people) => {
+  //     set.add(people.eye_color);
+  //   });
+  //   console.log(set);
+  // }, [allPeoples]);
+
+  const [allFilterPeoples, setAllFilterPeoples] = useState(allPeoples);
 
   const [loading, setLoading] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [peoplesPerPage, setPeoplesPerPage] = useState(9);
   const [currentPeoples, setCurrentPeoples] = useState([]);
   const [pageQty, setPageQty] = useState(0);
+
+  const [colorEye, setColorEye] = useState("all");
+
   const dispatch = useDispatch();
 
   //*api
@@ -78,23 +108,32 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   };
 
   useEffect(() => {
-    if (allPeople.length === 0) {
+    if (allFilterPeoples.length === 0) {
       getAllPeople();
     }
-  }, [allPeople]);
+  }, [allFilterPeoples]);
 
   //*pagination
+  useEffect(() => {
+    setPageQty(Math.ceil(allFilterPeoples.length / peoplesPerPage));
+  }, [allFilterPeoples, peoplesPerPage]);
 
   useEffect(() => {
-    setPageQty(Math.ceil(allPeople.length / peoplesPerPage));
-  }, [allPeople, peoplesPerPage]);
+    setCurrentPeoples(allFilterPeoples.slice((currentPage - 1) * peoplesPerPage, currentPage * peoplesPerPage));
+  }, [allFilterPeoples, currentPage, peoplesPerPage]);
 
+  //*filter
   useEffect(() => {
-    setCurrentPeoples(allPeople.slice((currentPage - 1) * peoplesPerPage, currentPage * peoplesPerPage));
-  }, [allPeople, currentPage, peoplesPerPage]);
+    if (colorEye === "all") {
+      setAllFilterPeoples(allPeoples);
+    } else {
+      const filterPeoples = allPeoples.filter((people) => people.eye_color === colorEye);
+      setAllFilterPeoples(filterPeoples);
+    }
+    setCurrentPage(1);
+  }, [allPeoples, colorEye]);
 
   //*resize
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -138,30 +177,6 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   // // console.log("people", people);
   //*---------------------------------end-------------------------
 
-  //todo Igor
-  // const url = "https://swapi.dev/api/people";
-
-  // const getPeople = (url) => fetch(url).then((res) => res.json());
-
-  // const getAllPeople = async () => {
-  //   let allPeople = [];
-
-  //   let next = url;
-
-  //   while (next != null) {
-  //     const res = await getPeople(next);
-
-  //     allPeople = allPeople.concat(res.results);
-  //     next = res.next;
-  //   }
-
-  //   console.log(allPeople);
-
-  //   return allPeople;
-  // };
-
-  // getAllPeople();
-
   if (loading) {
     return (
       <SLoadingContainer>
@@ -171,6 +186,13 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   }
   return (
     <SLoadingContainer>
+      <STitle>
+        {allFilterPeoples.length !== 0 ? allFilterPeoples.length : null} <SSpan>Peoples</SSpan> for you to choose your
+        favorite
+      </STitle>
+      <SSelectContainer>
+        <SelectFilter colorEye={colorEye} setColorEye={setColorEye} />
+      </SSelectContainer>
       <SContainer>
         {currentPeoples.map((card) => (
           <Card card={card} key={v4()} modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />

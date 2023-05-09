@@ -24,7 +24,7 @@ const SContainer = styled.div`
   height: 100%;
   /* align-items: center;
   justify-content: center; */
-  gap: 50px;
+  gap: 20px;
 `;
 
 const SLanguage = styled.p`
@@ -34,21 +34,21 @@ const SLanguage = styled.p`
   line-height: 20px;
 `;
 
-const STitle = styled.h2`
-  font-weight: 400;
-  font-size: 35px;
-  line-height: 41px;
-  text-align: center;
-  letter-spacing: 3px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`;
-const SSpan = styled.span`
-  font-weight: 700;
-`;
+// const STitle = styled.h2`
+//   font-weight: 400;
+//   font-size: 35px;
+//   line-height: 41px;
+//   text-align: center;
+//   letter-spacing: 3px;
+//   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// `;
+// const SSpan = styled.span`
+//   font-weight: 700;
+// `;
 //*component
 
 const CharactersPage = () => {
-  const allPeople = useSelector((state) => state.people.peoples);
+  // const allPeople = useSelector((state) => state.people.peoples);
   const modalPeople = useSelector((state) => state.people.modalPeople);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
@@ -83,11 +83,10 @@ const CharactersPage = () => {
       <SMain>
         <SContainer>
           <SLanguage>language: en</SLanguage>
-          <STitle>
+          {/* <STitle>
             {allPeople.length !== 0 ? allPeople.length : null} <SSpan>Peoples</SSpan> for you to choose your favorite
-          </STitle>
+          </STitle> */}
           <div>
-            <div>Color eye</div>
             <CardContainer modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />
           </div>
         </SContainer>
