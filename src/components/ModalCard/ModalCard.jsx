@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-// import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 
 import iconMale from "./img/Icon male.svg";
 import iconFemale from "./img/Icon female.svg";
@@ -144,7 +143,6 @@ const SCloseButton = styled.button`
   background-color: transparent;
   transition: transform 0.5s ease-in-out;
   :hover {
-    /* perspective: 500px; */
     transform: rotateZ(90deg);
     transition: transform 0.5s ease-in-out;
   }

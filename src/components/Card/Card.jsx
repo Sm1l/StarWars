@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 
-import { getModalPeople } from "../../store/PeopleSlice";
+import { getModalPeople } from "../../store/peopleSlice";
 
 const SCardContainer = styled.div`
   display: flex;

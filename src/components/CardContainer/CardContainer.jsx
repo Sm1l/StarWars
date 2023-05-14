@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getPeoples } from "../../store/PeopleSlice";
 import axios from "axios";
 import { v4 } from "uuid";
 import { Pagination } from "@mui/material";
 
+import { getPeoples, getPeoplesWookie } from "../../store/peopleSlice";
 import { Card } from "../Card";
 import { SelectFilter } from "../SelectFilter";
 
@@ -67,6 +67,7 @@ const SSpan = styled.span`
 //*component
 const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   const allPeoples = useSelector((state) => state.people.peoples);
+  const allPeoplesWookie = useSelector((state) => state.people.peoplesWookie);
   //!delete test
   // useEffect(() => {
   //   const set = new Set();
@@ -90,7 +91,9 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   const dispatch = useDispatch();
 
   //*api
+
   const URL = "https://swapi.dev/api/people/";
+
   const getPeople = (url) => axios.get(url);
 
   const getAllPeople = async () => {
@@ -112,6 +115,33 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
       getAllPeople();
     }
   }, [allFilterPeoples]);
+
+  //?wookie
+
+  const getAllPeopleWookie = async () => {
+    // setLoading(true);
+    let allPplWookie = [];
+    for (let i = 1; i < 84; i++) {
+      const URL_WOOKIE = `https://swapi.dev/api/people/${i}/?format=wookiee`;
+      try {
+        const res = await getPeople(URL_WOOKIE);
+        allPplWookie = allPplWookie.concat(res.data);
+      } catch (e) {
+        console.error(e, "Page:", i);
+        continue;
+      }
+    }
+    // setLoading(false);
+    dispatch(getPeoplesWookie({ peoplesWookie: allPplWookie }));
+  };
+
+  useEffect(() => {
+    if (allPeoplesWookie.length === 0) {
+      getAllPeopleWookie();
+    }
+  }, [allPeoplesWookie]);
+
+  //?wookie
 
   //*pagination
   useEffect(() => {

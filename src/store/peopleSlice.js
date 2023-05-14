@@ -6,6 +6,7 @@ const peopleSlice = createSlice({
   initialState: {
     peoples: [],
     modalPeople: {},
+    peoplesWookie: [],
   },
   reducers: {
     getPeoples(state, action) {
@@ -14,7 +15,10 @@ const peopleSlice = createSlice({
     getModalPeople(state, action) {
       state.modalPeople = action.payload.modalPeople;
     },
+    getPeoplesWookie(state, action) {
+      state.peoplesWookie = action.payload.peoplesWookie;
+    },
   },
 });
-export const { getPeoples, getModalPeople } = peopleSlice.actions;
+export const { getPeoples, getModalPeople, getPeoplesWookie } = peopleSlice.actions;
 export default peopleSlice.reducer;

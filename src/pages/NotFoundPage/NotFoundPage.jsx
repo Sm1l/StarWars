@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import NotFound from "./img/404.png";
 
-const StyledMain = styled.main`
+const SMain = styled.main`
   width: 100%;
   background-color: var(--color-purple);
   display: flex;
@@ -14,7 +14,7 @@ const StyledMain = styled.main`
   gap: 10px;
 `;
 
-const StyledContainer = styled.div`
+const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1200px;
@@ -25,13 +25,13 @@ const StyledContainer = styled.div`
   gap: 100px;
 `;
 
-const StyledImageContainer = styled.div`
+const SImageContainer = styled.div`
   position: relative;
   padding-bottom: 40%;
   padding-right: 80%;
 `;
 
-const StyledImage = styled.img`
+const SImage = styled.img`
   position: absolute;
   top: 0;
   left: 0;
@@ -40,7 +40,7 @@ const StyledImage = styled.img`
   object-fit: cover;
 `;
 
-const StyledButton = styled(Link)`
+const SButton = styled(Link)`
   font-size: 23px;
   line-height: 100%;
   font-weight: bold;
@@ -49,21 +49,23 @@ const StyledButton = styled(Link)`
   background-color: var(--color-green);
   border-radius: 11px;
   box-shadow: inset 0px -9px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.3s ease-in-out;
   :hover {
     box-shadow: inset 0px -9px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
   }
 `;
 
 const NotFoundPage = () => {
   return (
-    <StyledMain>
-      <StyledContainer>
-        <StyledImageContainer>
-          <StyledImage src={NotFound} alt="Not Found" />
-        </StyledImageContainer>
-        <StyledButton to="/">Return</StyledButton>
-      </StyledContainer>
-    </StyledMain>
+    <SMain>
+      <SContainer>
+        <SImageContainer>
+          <SImage src={NotFound} alt="Not Found" />
+        </SImageContainer>
+        <SButton to="/">Return</SButton>
+      </SContainer>
+    </SMain>
   );
 };
 

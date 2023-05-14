@@ -5,15 +5,14 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 import { CardContainer } from "../../components/CardContainer";
 import { ModalCard } from "../../components/ModalCard";
+import { LanguageContainer } from "../../components/LanguageContainer";
 
 const SMain = styled.main`
-  /* background-color: var(--color-yellow); */
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
 `;
 const SContainer = styled.div`
   display: flex;
@@ -27,29 +26,12 @@ const SContainer = styled.div`
   gap: 20px;
 `;
 
-const SLanguage = styled.p`
-  align-self: flex-end;
-  font-family: "Source Sans Pro";
-  font-size: 16px;
-  line-height: 20px;
-`;
-
-// const STitle = styled.h2`
-//   font-weight: 400;
-//   font-size: 35px;
-//   line-height: 41px;
-//   text-align: center;
-//   letter-spacing: 3px;
-//   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-// `;
-// const SSpan = styled.span`
-//   font-weight: 700;
-// `;
 //*component
 
 const CharactersPage = () => {
   // const allPeople = useSelector((state) => state.people.peoples);
   const modalPeople = useSelector((state) => state.people.modalPeople);
+  const language = useSelector((state) => state.language.language);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   //*disable scroll
@@ -82,13 +64,10 @@ const CharactersPage = () => {
       {modalIsVisible && <ModalCard card={modalPeople} setModalIsVisible={setModalIsVisible}></ModalCard>}
       <SMain>
         <SContainer>
-          <SLanguage>language: en</SLanguage>
-          {/* <STitle>
-            {allPeople.length !== 0 ? allPeople.length : null} <SSpan>Peoples</SSpan> for you to choose your favorite
-          </STitle> */}
-          <div>
+          <LanguageContainer />
+          {language === "en" ? (
             <CardContainer modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />
-          </div>
+          ) : null}
         </SContainer>
       </SMain>
     </>

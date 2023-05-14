@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Yoda from "./img/Yoda.png";
 import { Link } from "react-router-dom";
 
-const StyledMain = styled.main`
+const SMain = styled.main`
   width: 100%;
   /* height: 100%; */
   color: var(--color-white);
@@ -14,7 +14,7 @@ const StyledMain = styled.main`
   justify-content: center;
 `;
 
-const StyledContainer = styled.div`
+const SContainer = styled.div`
   /* display: flex; */
   display: grid;
   grid-template-columns: 1.2fr 2fr;
@@ -34,7 +34,7 @@ const StyledContainer = styled.div`
     grid-template-areas: "image" "text";
   }
 `;
-const StyledTextContainer = styled.div`
+const STextContainer = styled.div`
   display: flex;
   grid-area: text;
   /* flex: 1 35%; */
@@ -47,22 +47,22 @@ const StyledTextContainer = styled.div`
   }
 `;
 
-const StyledImageContainer = styled.div`
+const SImageContainer = styled.div`
   position: relative;
   padding-bottom: 100%;
 `;
 
-const StyledTitle = styled.h1`
+const STitle = styled.h1`
   font-size: 72px;
   line-height: 80px;
 `;
 
-const StyledText = styled.p`
+const SText = styled.p`
   font-size: 32px;
   line-height: 100%;
 `;
 
-const StyledButton = styled(Link)`
+const SButton = styled(Link)`
   font-size: 23px;
   line-height: 100%;
   font-weight: bold;
@@ -72,18 +72,20 @@ const StyledButton = styled(Link)`
   border-radius: 11px;
   box-shadow: inset 0px -9px rgba(0, 0, 0, 0.18);
   align-self: flex-start;
+  transition: box-shadow 0.3s ease-in-out;
   :hover {
     box-shadow: inset 0px -9px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
   }
   @media (max-width: 1024px) {
     align-self: stretch;
   }
 `;
-const StyledSpan = styled.span`
+const SSpan = styled.span`
   font-weight: bold;
 `;
 
-const StyledImage = styled.img`
+const SImage = styled.img`
   position: absolute;
   top: 0;
   left: 0;
@@ -94,20 +96,20 @@ const StyledImage = styled.img`
 
 const MainPage = () => {
   return (
-    <StyledMain>
-      <StyledContainer>
-        <StyledTextContainer>
-          <StyledTitle>
-            <StyledSpan>Find</StyledSpan> all your favorite <StyledSpan>character</StyledSpan>
-          </StyledTitle>
-          <StyledText>You can find out all the information about your favorite characters</StyledText>
-          <StyledButton to="/characters">See more...</StyledButton>
-        </StyledTextContainer>
-        <StyledImageContainer>
-          <StyledImage src={Yoda}></StyledImage>
-        </StyledImageContainer>
-      </StyledContainer>
-    </StyledMain>
+    <SMain>
+      <SContainer>
+        <STextContainer>
+          <STitle>
+            <SSpan>Find</SSpan> all your favorite <SSpan>character</SSpan>
+          </STitle>
+          <SText>You can find out all the information about your favorite characters</SText>
+          <SButton to="/characters">See more...</SButton>
+        </STextContainer>
+        <SImageContainer>
+          <SImage src={Yoda}></SImage>
+        </SImageContainer>
+      </SContainer>
+    </SMain>
   );
 };
 

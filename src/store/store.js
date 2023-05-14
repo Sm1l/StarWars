@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import PeopleSlice from "./PeopleSlice";
-// import themeSlice from "./themeSlice";
-// import menuSlice from "./menuSlice";
+import peopleSlice from "./peopleSlice";
+import languageSlice from "./languageSlice";
 
 export default configureStore({
   reducer: {
-    people: PeopleSlice,
-    // theme: themeSlice,
-    // menu: menuSlice,
+    people: peopleSlice,
+    language: languageSlice,
   },
 });
