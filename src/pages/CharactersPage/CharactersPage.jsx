@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 import { CardContainer } from "../../components/CardContainer";
+import { CardContainerWookie } from "../../components/CardContainerWookie";
 import { ModalCard } from "../../components/ModalCard";
 import { LanguageContainer } from "../../components/LanguageContainer";
 
@@ -31,6 +32,7 @@ const SContainer = styled.div`
 const CharactersPage = () => {
   // const allPeople = useSelector((state) => state.people.peoples);
   const modalPeople = useSelector((state) => state.people.modalPeople);
+
   const language = useSelector((state) => state.language.language);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
@@ -67,7 +69,9 @@ const CharactersPage = () => {
           <LanguageContainer />
           {language === "en" ? (
             <CardContainer modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />
-          ) : null}
+          ) : (
+            <CardContainerWookie modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} />
+          )}
         </SContainer>
       </SMain>
     </>

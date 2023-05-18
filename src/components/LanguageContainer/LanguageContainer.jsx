@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
@@ -14,7 +14,6 @@ const SLanguageContainer = styled.div`
 `;
 
 const SLanguage = styled.p`
-  /* align-self: flex-end; */
   font-family: "Source Sans Pro";
   font-size: 16px;
   line-height: 20px;

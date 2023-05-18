@@ -5,7 +5,7 @@ import axios from "axios";
 import { v4 } from "uuid";
 import { Pagination } from "@mui/material";
 
-import { getPeoples, getPeoplesWookie } from "../../store/peopleSlice";
+import { getPeoples } from "../../store/peopleSlice";
 import { Card } from "../Card";
 import { SelectFilter } from "../SelectFilter";
 
@@ -60,6 +60,7 @@ const STitle = styled.h2`
   letter-spacing: 3px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
+
 const SSpan = styled.span`
   font-weight: 700;
 `;
@@ -67,7 +68,7 @@ const SSpan = styled.span`
 //*component
 const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   const allPeoples = useSelector((state) => state.people.peoples);
-  const allPeoplesWookie = useSelector((state) => state.people.peoplesWookie);
+  // const allPeoplesWookie = useSelector((state) => state.people.peoplesWookie);
   //!delete test
   // useEffect(() => {
   //   const set = new Set();
@@ -116,32 +117,32 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
     }
   }, [allFilterPeoples]);
 
-  //?wookie
+  // //?wookie
 
-  const getAllPeopleWookie = async () => {
-    // setLoading(true);
-    let allPplWookie = [];
-    for (let i = 1; i < 84; i++) {
-      const URL_WOOKIE = `https://swapi.dev/api/people/${i}/?format=wookiee`;
-      try {
-        const res = await getPeople(URL_WOOKIE);
-        allPplWookie = allPplWookie.concat(res.data);
-      } catch (e) {
-        console.error(e, "Page:", i);
-        continue;
-      }
-    }
-    // setLoading(false);
-    dispatch(getPeoplesWookie({ peoplesWookie: allPplWookie }));
-  };
+  // const getAllPeopleWookie = async () => {
+  //   // setLoading(true);
+  //   let allPplWookie = [];
+  //   for (let i = 1; i < 84; i++) {
+  //     const URL_WOOKIE = `https://swapi.dev/api/people/${i}/?format=wookiee`;
+  //     try {
+  //       const res = await getPeople(URL_WOOKIE);
+  //       allPplWookie = allPplWookie.concat(res.data);
+  //     } catch (e) {
+  //       console.error(e, "Page:", i);
+  //       continue;
+  //     }
+  //   }
+  //   // setLoading(false);
+  //   dispatch(getPeoplesWookie({ peoplesWookie: allPplWookie }));
+  // };
 
-  useEffect(() => {
-    if (allPeoplesWookie.length === 0) {
-      getAllPeopleWookie();
-    }
-  }, [allPeoplesWookie]);
+  // useEffect(() => {
+  //   if (allPeoplesWookie.length === 0) {
+  //     getAllPeopleWookie();
+  //   }
+  // }, [allPeoplesWookie]);
 
-  //?wookie
+  // //?wookie
 
   //*pagination
   useEffect(() => {

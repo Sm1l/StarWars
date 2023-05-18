@@ -23,6 +23,7 @@ const StyledContainer = styled.div`
   max-width: 1200px;
   padding-top: 10px;
   padding: 10px;
+  gap: 10px;
 `;
 const StyledNavContainer = styled.div`
   display: flex;
@@ -32,6 +33,10 @@ const StyledNavContainer = styled.div`
   gap: 70px;
   font-size: 25px;
   line-height: 100%;
+  @media (max-width: 768px) {
+    gap: 20px;
+    font-size: 18px;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
