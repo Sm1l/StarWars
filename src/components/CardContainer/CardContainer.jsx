@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { v4 } from "uuid";
@@ -11,64 +10,11 @@ import { SelectFilter } from "../SelectFilter";
 
 import DartVader from "./img/DartVader.png";
 
-//*style
-const SContainer = styled.div`
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
-  @media (max-width: 1124px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const SSelectContainer = styled.div`
-  align-self: flex-start;
-`;
-
-const SLoadingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  justify-content: space-between;
-  height: 100%;
-`;
-
-const rotate = keyframes`
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-`;
-
-const SImgLoading = styled.img`
-  animation: ${rotate} 2s linear infinite;
-`;
-
-const STitle = styled.h2`
-  font-weight: 400;
-  font-size: 35px;
-  line-height: 41px;
-  text-align: center;
-  letter-spacing: 3px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`;
-
-const SSpan = styled.span`
-  font-weight: 700;
-`;
+import { SContainer, SSelectContainer, SLoadingContainer, SImgLoading, STitle, SSpan } from "./stylesCardContainer";
 
 //*component
 const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
   const allPeoples = useSelector((state) => state.people.peoples);
-  // const allPeoplesWookie = useSelector((state) => state.people.peoplesWookie);
   //!delete test
   // useEffect(() => {
   //   const set = new Set();
@@ -117,33 +63,6 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
     }
   }, [allFilterPeoples]);
 
-  // //?wookie
-
-  // const getAllPeopleWookie = async () => {
-  //   // setLoading(true);
-  //   let allPplWookie = [];
-  //   for (let i = 1; i < 84; i++) {
-  //     const URL_WOOKIE = `https://swapi.dev/api/people/${i}/?format=wookiee`;
-  //     try {
-  //       const res = await getPeople(URL_WOOKIE);
-  //       allPplWookie = allPplWookie.concat(res.data);
-  //     } catch (e) {
-  //       console.error(e, "Page:", i);
-  //       continue;
-  //     }
-  //   }
-  //   // setLoading(false);
-  //   dispatch(getPeoplesWookie({ peoplesWookie: allPplWookie }));
-  // };
-
-  // useEffect(() => {
-  //   if (allPeoplesWookie.length === 0) {
-  //     getAllPeopleWookie();
-  //   }
-  // }, [allPeoplesWookie]);
-
-  // //?wookie
-
   //*pagination
   useEffect(() => {
     setPageQty(Math.ceil(allFilterPeoples.length / peoplesPerPage));
@@ -186,27 +105,6 @@ const CardContainer = ({ modalIsVisible, setModalIsVisible }) => {
       setPeoplesPerPage(5);
     }
   }, [windowWidth]);
-
-  //*---------------------------------start-------------------------
-  // const URL = "https://swapi.dev/api/people/";
-  // let people = [];
-
-  // const getCards = (url) => {
-  //   axios
-  //     .get(url)
-  //     .then((response) => {
-  //       people = people.concat(response.data.results);
-  //       // console.log("people", people);
-  //       if (response.data.next) {
-  //         getCards(response.data.next);
-  //       }
-  //       return people;
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
-  // // getCards(URL);
-  // // console.log("people", people);
-  //*---------------------------------end-------------------------
 
   if (loading) {
     return (

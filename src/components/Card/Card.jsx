@@ -13,7 +13,7 @@ import {
   SAnthropometricText,
   STagContainer,
   STagItem,
-} from "./cardStyle";
+} from "./stylesCard";
 
 const Card = ({ card, setModalIsVisible }) => {
   const dispatch = useDispatch();

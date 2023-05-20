@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 
-import { MainPage } from "./pages/MainPage";
-import { CharactersPage } from "./pages/CharactersPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { Layout } from "./components/Layout/Layout";
-import { GlobalStyle } from "./base/GlobalStyle";
+import { MainPage } from "../../pages/MainPage";
+import { CharactersPage } from "../../pages/CharactersPage";
+import { NotFoundPage } from "../../pages/NotFoundPage";
+import { Layout } from "../Layout/Layout";
+import { GlobalStyle } from "../../base/GlobalStyle";
 
 const SContainer = styled.div`
   display: flex;
@@ -35,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export { App };
